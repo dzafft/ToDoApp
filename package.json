@@ -8,10 +8,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.3.4"
+    "@rushstack/eslint-patch": "^1.5.1",
+    "@vue/eslint-config-airbnb": "^7.0.0",
+    "@vue/eslint-config-prettier": "^8.0.0",
+    "nanoid": "^5.0.2",
+    "primeicons": "^6.0.1",
+    "primevue": "^3.36.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.4",
+    "@vue/test-utils": "^2.4.1",
+    "eslint": "^8.51.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-vue": "^9.17.0",
+    "prettier": "^3.0.3",
     "vite": "^4.4.9"
   }
 }
