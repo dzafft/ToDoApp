@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <header>
       <h1>Notes Website</h1>
       <div>
@@ -9,16 +9,8 @@
         </nav>
       </div>
     </header>
-    <main>
-      <!-- <div class="mainpage-header"> -->
-        <!-- <h1>Create Note:</h1>
-        <a href="#/notelist">
-          <div class="external-link-notelist">
-            <h3>View Note List</h3>
-            <i class="pi pi-external-link"></i>
-          </div>
-        </a>
-      </div> -->
+    <main style="height: 100vh; width: 100vw; background-color: white;">
+      
       <component 
       :is="currentView"
       @handleButtonClick="handleButtonClick"
@@ -33,25 +25,7 @@
       @undoEdit="undoEdit"
       @deleteNote="deleteNote"
       /> 
-      <!-- <CreateNote 
-      @handleButtonClick="handleButtonClick"
-      v-model:noteTitle="noteTitle"
-      v-model:noteText="noteText"
-      v-model:completedByDate="completedByDate"
-      v-model:completedByTime="completedByTime"
-      :list="list"
-      @updateNote="updateNote"
-      @clearNote="clearNote"
-      :toUpdate="toUpdate"
-      @undoEdit="undoEdit"
-      />
-      <NoteList 
-      v-model:completedByDate="completedByDate"
-      v-model:completedByTime="completedByTime"
-      :list="list"
-      @updateNote="updateNote"
-      @deleteNote="deleteNote"
-      /> -->
+      
 
       
     </main>
@@ -131,7 +105,7 @@ function isDateTimeExpired(obj) {
 
 function getTomorrowDate() {
   const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1); // Add one day to the current date
+  tomorrow.setDate(tomorrow.getDate() + 1); 
   const year = tomorrow.getFullYear();
   const month = String(tomorrow.getMonth() + 1).padStart(2, '0');
   const day = String(tomorrow.getDate()).padStart(2, '0');
@@ -150,7 +124,6 @@ function handleButtonClick(object) {
     completedByTime: object.time,
     id: nanoid()
   }
-  console.log(note)
     if (toUpdate.value === false){
       list.value.push(note);
       
@@ -162,7 +135,6 @@ function handleButtonClick(object) {
     }
     else{
 
-      console.log(updateIndex.value)
       
       confirm1(updateIndex.value)
       
@@ -171,9 +143,7 @@ function handleButtonClick(object) {
 }
 
 function finishEdit(id){
-  console.log("finish edit")
   const index = list.value.findIndex(item => item.id === id);
-    console.log(index)
 
   if (index !== -1) {
   // Create the updated object
@@ -231,6 +201,10 @@ function clearNote(){
 
 <style scoped>
 
+main{
+  margin: 0;
+}
+
 header {
   background-color: #007acc;
   color: white;
@@ -267,19 +241,21 @@ main {
 }
 
 .navbar {
-  background-color: #0074d9; /* Change to your preferred blue color */
+  background-color: #0074d9; 
   padding: 10px;
 }
 
 .navbar a {
   text-decoration: none;
-  color: #fff; /* Text color for links */
+  color: #fff; 
   margin: 10px;
   font-size: 16px;
 }
 
 .navbar a:hover {
-  text-decoration: underline; /* Underline on hover */
+  text-decoration: underline;
 }
+
+
 
 </style>

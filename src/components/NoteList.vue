@@ -1,39 +1,39 @@
 <template>
-      <div>
-        <h1 class="notelist-header">Notes</h1>
-        <Toast />
-        <ConfirmDialog></ConfirmDialog>
-        <ul class="notes-list">
-          <Card class="note" v-for="(item) in list"
-            :key="item.id">
-            <template #title>
-              <div class="note-title">{{ item.title }}</div>
-            </template>
-            <template #content>
-              <div class="note-text">
-                <p class="text-content">{{ item.text }}</p>
-              </div>
-            </template>
-            <template #footer>
-              <div class="card-footer">
-                <div class="time-difference"><span class="time-difference-text">Time left:</span> {{ itemTimeDifference(item) }}</div>
-                <div class="note-buttons">
-                  <Button id="updateButton" icon="pi pi-file-edit" severity="success" rounded aria-label="Cancel" @click="$emit('updateNote', item.id)" class="update-button" />
-                  <Button
-                    id="deleteButton"
-                    icon="pi pi-delete-left"
-                    severity="danger"
-                    rounded
-                    aria-label="Cancel"
-                    @click="confirm1(item.id)"
-                    class="delete-button"
-                  />
-              </div>
-              </div>
-            </template>
-          </Card>
-        </ul>
-      </div>
+  <div>
+    <h1 style="color: black;" class="notelist-header">Notes</h1>
+    <Toast />
+    <ConfirmDialog></ConfirmDialog>
+    <ul class="notes-list">
+      <Card class="note" v-for="(item) in list"
+        :key="item.id">
+        <template #title>
+          <div class="note-title">{{ item.title }}</div>
+        </template>
+        <template #content>
+          <div class="note-text">
+            <p class="text-content">{{ item.text }}</p>
+          </div>
+        </template>
+        <template #footer>
+          <div class="card-footer">
+            <div class="time-difference"><span class="time-difference-text">Time left:</span> {{ itemTimeDifference(item) }}</div>
+            <div class="note-buttons">
+              <Button id="updateButton" icon="pi pi-file-edit" severity="success" rounded aria-label="Cancel" @click="$emit('updateNote', item.id)" class="update-button" />
+              <Button
+                id="deleteButton"
+                icon="pi pi-delete-left"
+                severity="danger"
+                rounded
+                aria-label="Cancel"
+                @click="confirm1(item.id)"
+                class="delete-button"
+              />
+          </div>
+          </div>
+        </template>
+      </Card>
+    </ul>
+  </div>
 </template>
 
 <script setup>
@@ -82,7 +82,6 @@ const confirm = useConfirm();
 const toast = useToast();
 
 const confirm1 = (id) => {
-  console.log(id)
   confirm.require({
       message: 'Do you want to delete this record?',
       header: 'Delete Confirmation',
@@ -113,42 +112,40 @@ const props = defineProps({
 </script>
 
 <style scoped>
-/* .progressbar{
-  width: 100px;
-} */
+
 .notes-list{
   padding: 0;
 }
 
 .note {
-  background-color: #f5f5f5; /* A light gray background color */
-  border: 2px solid #ccc; /* A slightly thicker border with a neutral gray color */
-  border-radius: 8px; /* Rounded corners for a more modern look */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* A subtle box shadow for depth */
-  min-height: 100px; /* Increased height for better card visibility */
+  background-color: #f5f5f5; 
+  border: 2px solid #ccc; 
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  min-height: 100px; 
   font-size: 16px;
   align-items: center;
   list-style-type: none;
   margin-bottom: 15px;
   min-height: 50px;
-  word-wrap: break-word; /* Enable text wrapping */
-  white-space: pre-wrap; /* Handle newlines and wrap words */
+  word-wrap: break-word; 
+  white-space: pre-wrap; 
 }
 
 .note-text {
-  text-align: left; /* Adjust text alignment as needed */
+  text-align: left;
 }
 
 
 .text-content {
-  word-wrap: break-word; /* Enable text wrapping */
-  white-space: pre-wrap; /* Handle newlines */
+  word-wrap: break-word; 
+  white-space: pre-wrap; 
 }
 .note-title {
   font-weight: bold;
-  text-transform: uppercase; /* Transform text to uppercase */
-  word-wrap: break-word; /* Enable text wrapping */
-  white-space: pre-wrap; /* Handle newlines */
+  text-transform: uppercase; 
+  word-wrap: break-word; 
+  white-space: pre-wrap; 
 }
 .notelist-header{
   text-align: center;

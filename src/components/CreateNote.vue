@@ -2,21 +2,21 @@
 
   <div>
       <div class="notemaker-container">
-        <h1 class="create-note-header">Create Note</h1>
+        <h1 style="color: black;" class="create-note-header">Create Note</h1>
         <Toast />
         <ConfirmDialog></ConfirmDialog>
         <Textarea :value="noteTitle" placeholder="Title..." class="non-resizable-textarea" @input="$emit('update:noteTitle', $event.target.value)"/>
         <Textarea :value="noteText" placeholder="Type away..." class="note-text non-resizable-textarea" @input="$emit('update:noteText', $event.target.value)"/>
         <div class="time-container">
           <div class="datepicker-input">
-            <label for="datepicker">Select a date:</label>
+            <label style="color: black;" for="datepicker">Select a date:</label>
             <InputText id="datepicker" :min="getTodayDate()" type="date" :value="completedByDate" @input="$emit('update:completedByDate', $event.target.value)" />
-            <small id="username-help">Enter the date by which you would like this task completed.</small>
+            <small style="color: black;" id="username-help">Enter the date by which you would like this task completed.</small>
           </div>
           <div class="timepicker-input">
-            <label for="timepicker">Select a time:</label>
+            <label style="color: black;" for="timepicker">Select a time:</label>
             <InputText id="timepicker" type="time" min="00:00" max="23:59" :value="completedByTime" @input="$emit('update:completedByTime', $event.target.value)" />
-            <small id="username-help">Enter the specific hour.</small>
+            <small style="color: black;" id="username-help">Enter the specific hour.</small>
           </div>
           <Button class="submit-button"  size="large" @click="$emit('handleButtonClick', {title: noteTitle, text: noteText, date: completedByDate, time: completedByTime})" :disabled="noteTitle === '' || noteText === '' || completedByDate === '' || completedByTime === ''" >
               {{ toUpdate ? 'Update' : 'Submit' }}
@@ -51,7 +51,7 @@ const minDate = ref(getTodayDate());
 function getTodayDate() {
   const today = new Date();
   const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed, so we add 1
+  const month = String(today.getMonth() + 1).padStart(2, '0'); 
   const day = String(today.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
