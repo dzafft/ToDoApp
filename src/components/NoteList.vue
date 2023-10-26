@@ -20,14 +20,16 @@
               {{ itemTimeDifference(item) }}
             </div>
             <div class="note-buttons">
-              <Button
-                icon="pi pi-file-edit"
-                severity="success"
-                rounded
-                aria-label="Cancel"
-                @click="handleEditClick(item)"
-                class="update-button"
-              />
+              <router-link :to="{ name: 'createnote' }">
+                <Button
+                  icon="pi pi-file-edit"
+                  severity="success"
+                  rounded
+                  aria-label="Cancel"
+                  class="update-button"
+                  @click="handleEditClick(item, $event)"
+                />
+              </router-link>
               <Button
                 id="deleteButton"
                 icon="pi pi-delete-left"
@@ -57,9 +59,7 @@ import Card from "primevue/card";
 import { useRouter } from "vue-router";
 
 
-function handleEditClick(item) {
-  const router = useRouter();
-  router.push({ name: 'createnote' });
+function handleEditClick(item, event) {
   emit("updateNote", item.id);
 }
 
