@@ -56,9 +56,8 @@
             })
           "
           :disabled="isSubmitButtonDisabled"
-        >
-          {{ toUpdate ? "Update" : "Submit" }}
-        </Button>
+          :label="toUpdate ? 'Update' : 'Submit'"
+        />
         <Button
           :disabled="isClearButtonDisabled"
           class="clear-button"
