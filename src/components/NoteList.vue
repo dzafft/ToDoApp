@@ -54,16 +54,12 @@ import ConfirmDialog from "primevue/confirmdialog";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import Card from "primevue/card";
+import { useRouter } from "vue-router";
+
 
 function handleEditClick(item) {
-  // Remove the "noteList" part of the URL
-  const currentURL = window.location.href;
-  const newURL = currentURL.replace('/noteList', '');
-
-  // Redirect to the new URL
-  window.location.href = newURL;
-
-  // Additionally, you can emit an event or perform other actions as needed
+  const router = useRouter();
+  router.push({ name: 'createnote' });
   emit("updateNote", item.id);
 }
 

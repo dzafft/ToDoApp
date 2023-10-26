@@ -1,6 +1,6 @@
 // describe('Note Adding and Verification', () => {
 //   it('should add a note and verify its content', () => {
-//     cy.visit('https://12428b39.todoapp-2qf.pages.dev/#/')
+//     cy.visit('https://6493fd3d.todoapp-2qf.pages.dev/#/')
 
 //     // Ensure the page is fully loaded before interacting with elements
 //     cy.wait(1000); // Adjust the waiting time as needed
@@ -22,7 +22,7 @@
 
 //     cy.get('.submit-button').click();
 
-//     cy.visit('https://12428b39.todoapp-2qf.pages.dev/#/notelist');
+//     cy.visit('https://6493fd3d.todoapp-2qf.pages.dev/#/notelist');
 
 //     cy.get('.note').then(($cards) => {
 //       // Get the last card in the list
@@ -43,7 +43,7 @@
 
 describe('Update Check', () => {
   it('should add a note, then edit, and verify its content', () => {
-    cy.visit('https://12428b39.todoapp-2qf.pages.dev/#/')
+    cy.visit('https://6493fd3d.todoapp-2qf.pages.dev/#/')
     // Clear the input field and type "1"
     cy.get('textarea[placeholder="Title..."]')
       .clear()
@@ -59,7 +59,7 @@ describe('Update Check', () => {
     cy.get('.submit-button').click();
 
 
-    cy.visit('https://12428b39.todoapp-2qf.pages.dev/#/notelist');
+    cy.visit('https://6493fd3d.todoapp-2qf.pages.dev/#/notelist');
 
     cy.get('.note').then(($cards) => {
       // Get the first card in the list
@@ -82,7 +82,7 @@ describe('Update Check', () => {
     //   .should("have.value", "2");
     
  
-    
+
 
 
 
