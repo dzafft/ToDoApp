@@ -56,8 +56,14 @@ import { useToast } from "primevue/usetoast";
 import Card from "primevue/card";
 
 function handleEditClick(item) {
-  console.log("INside ");
-  window.location.href = "http://localhost:5173/#/";
+  // Remove the "noteList" part of the URL
+  const currentURL = window.location.href;
+  const newURL = currentURL.replace('/noteList', '');
+
+  // Redirect to the new URL
+  window.location.href = newURL;
+
+  // Additionally, you can emit an event or perform other actions as needed
   emit("updateNote", item.id);
 }
 
