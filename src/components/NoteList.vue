@@ -136,7 +136,6 @@ const props = defineProps({
   align-items: center;
   list-style-type: none;
   margin-bottom: 15px;
-  min-height: 50px;
   word-wrap: break-word;
   white-space: pre-wrap;
 }
