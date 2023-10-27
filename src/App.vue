@@ -9,7 +9,7 @@
         </nav>
       </div>
     </header>
-    <main style="height: 100vh; width: 100vw; background-color: white">
+    <main>
       <router-view
         @handleButtonClick="handleButtonClick"
         v-model:noteTitle="noteTitle"
@@ -29,7 +29,7 @@
 
 
 <script setup>
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, onBeforeMount, onBeforeUnmount, onUpdated } from "vue";
 import Toast from "primevue/toast";
 import ConfirmDialog from "primevue/confirmdialog";
 import { useConfirm } from "primevue/useconfirm";
@@ -48,6 +48,11 @@ const completedByDate = ref(getTomorrowDate());
 const completedByTime = ref("10:00");
 
 const onUpdateNote = (id) => {
+  const index = list.value.findIndex((item) => item.id === id);
+  if (index === -1){
+    alert('You have deleted this note!');
+    return
+  }
   confirm.require({
     message: "Are you sure you want to proceed?",
     header: "Edit",
@@ -59,7 +64,7 @@ const onUpdateNote = (id) => {
         detail: "Note updated!",
         life: 3000,
       });
-      finishEdit(id);
+      finishEdit(id, index);
     },
     reject: () => {
       toast.add({
@@ -122,8 +127,7 @@ function handleButtonClick(object) {
   }
 }
 
-function finishEdit(id) {
-  const index = list.value.findIndex((item) => item.id === id);
+function finishEdit(id, index) {
 
   if (index !== -1) {
     // Create the updated object
@@ -142,6 +146,9 @@ function finishEdit(id) {
 
     // Update the item at the found index with the new object
     list.value[index] = updatedNote;
+  }
+  else{
+    alert('You have deleted this note!')
   }
 }
 function updateNote(id) {
@@ -177,6 +184,8 @@ function clearNote() {
 <style scoped>
 main {
   margin: 0;
+  background-color: white;
+  height: 100vh;
 }
 
 header {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="notemaker-container">
-      <h1 style="color: black" class="create-note-header">Create Note</h1>
+      <h1 class="create-note-header">Create Note</h1>
       <Toast />
       <ConfirmDialog />
       <Textarea
@@ -18,7 +18,7 @@
       />
       <div class="time-container">
         <div class="datepicker-input">
-          <label style="color: black" for="datepicker">Select a date:</label>
+          <label class="label-datepicker" for="datepicker">Select a date:</label>
           <InputText
             id="datepicker"
             :min="getTodayDate()"
@@ -26,12 +26,12 @@
             :value="completedByDate"
             @input="$emit('update:completedByDate', $event.target.value)"
           />
-          <small style="color: black" id="username-help"
+          <small id="small-label"
             >Enter the date by which you would like this task completed.</small
           >
         </div>
         <div class="timepicker-input">
-          <label style="color: black" for="timepicker">Select a time:</label>
+          <label id="small-label" for="timepicker">Select a time:</label>
           <InputText
             id="timepicker"
             type="time"
@@ -40,7 +40,7 @@
             :value="completedByTime"
             @input="$emit('update:completedByTime', $event.target.value)"
           />
-          <small style="color: black" id="username-help"
+          <small id="small-label"
             >Enter the specific hour.</small
           >
         </div>
@@ -71,8 +71,7 @@
           size="small"
           @click="$emit('undoEdit')"
           v-if="toUpdate"
-          >Cancel Update<i class="pi pi-undo"></i
-        ></Button>
+          >Cancel Update<i class="pi pi-undo" /></Button>
       </div>
     </div>
   </div>
@@ -144,6 +143,7 @@ const emit = defineEmits([
   "update:completedByDate",
   "update:noteTitle",
   "update:noteText",
+  'undoEdit'
 ]);
 </script>
 
@@ -160,6 +160,7 @@ textarea {
 .create-note-header {
   text-align: center;
   margin-bottom: 2%;
+  color: black;
 }
 
 .non-resizable-textarea {
@@ -177,9 +178,17 @@ textarea {
   flex-direction: column;
 }
 
+.label-datepicker{
+  color: black;
+}
+
 .time-container {
   display: flex;
   align-items: center;
+}
+
+#small-label{
+  color: black;
 }
 
 .time-container > * {

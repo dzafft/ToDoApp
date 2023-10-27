@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 style="color: black" class="notelist-header">Notes</h1>
+    <h1 class="notelist-header">Notes</h1>
     <Toast />
     <ConfirmDialog />
     <ul class="notes-list">
@@ -57,6 +57,11 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import Card from "primevue/card";
 import { useRouter } from "vue-router";
+import {onUpdated} from 'vue';
+
+onUpdated(()=>{
+  console.log(props.list)
+})
 
 
 function handleEditClick(item, event) {
@@ -160,6 +165,7 @@ const props = defineProps({
   text-align: center;
   margin-bottom: 2%;
   margin-top: 2%;
+  color: black;
 }
 
 .card-footer {
