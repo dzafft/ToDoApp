@@ -57,12 +57,6 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import Card from "primevue/card";
 import { useRouter } from "vue-router";
-import {onUpdated} from 'vue';
-
-onUpdated(()=>{
-  console.log(props.list)
-})
-
 
 function handleEditClick(item, event) {
   emit("updateNote", item.id);
