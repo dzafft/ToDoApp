@@ -7,18 +7,22 @@
       <Textarea
         :value="noteTitle"
         placeholder="Title..."
+        id="titleTextarea"
         class="non-resizable-textarea"
         @input="$emit('update:noteTitle', $event.target.value)"
       />
       <Textarea
         :value="noteText"
         placeholder="Type away..."
+        id="textTextarea"
         class="note-text non-resizable-textarea"
         @input="$emit('update:noteText', $event.target.value)"
       />
       <div class="time-container">
         <div class="datepicker-input">
-          <label class="label-datepicker" for="datepicker">Select a date:</label>
+          <label class="label-datepicker" for="datepicker"
+            >Select a date:</label
+          >
           <InputText
             id="datepicker"
             :min="getTodayDate()"
@@ -40,9 +44,7 @@
             :value="completedByTime"
             @input="$emit('update:completedByTime', $event.target.value)"
           />
-          <small id="small-label"
-            >Enter the specific hour.</small
-          >
+          <small id="small-label">Enter the specific hour.</small>
         </div>
         <Button
           class="submit-button"
@@ -71,7 +73,8 @@
           size="small"
           @click="$emit('undoEdit')"
           v-if="toUpdate"
-          >Cancel Update<i class="pi pi-undo" /></Button>
+          >Cancel Update<i class="pi pi-undo"
+        /></Button>
       </div>
     </div>
   </div>
@@ -87,6 +90,9 @@ import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "primeicons/primeicons.css";
 import Toast from "primevue/toast";
 import ConfirmDialog from "primevue/confirmdialog";
+import {useTitleStore} from "@/stores/title";
+
+const titleStore = useTitleStore();
 
 const isSubmitButtonDisabled = computed(() => {
   return (
@@ -143,7 +149,7 @@ const emit = defineEmits([
   "update:completedByDate",
   "update:noteTitle",
   "update:noteText",
-  'undoEdit'
+  "undoEdit",
 ]);
 </script>
 
@@ -178,7 +184,7 @@ textarea {
   flex-direction: column;
 }
 
-.label-datepicker{
+.label-datepicker {
   color: black;
 }
 
@@ -187,7 +193,7 @@ textarea {
   align-items: center;
 }
 
-#small-label{
+#small-label {
   color: black;
 }
 
@@ -203,5 +209,4 @@ textarea {
   display: flex;
   flex-direction: column;
 }
-
 </style>

@@ -27,7 +27,6 @@
   </div>
 </template>
 
-
 <script setup>
 import { ref, watchEffect } from "vue";
 import Toast from "primevue/toast";
@@ -49,9 +48,9 @@ const completedByTime = ref("10:00");
 
 const onUpdateNote = (id) => {
   const index = list.value.findIndex((item) => item.id === id);
-  if (index === -1){
-    alert('You have deleted this note!');
-    return
+  if (index === -1) {
+    alert("You have deleted this note!");
+    return;
   }
   confirm.require({
     message: "Are you sure you want to proceed?",
@@ -63,6 +62,8 @@ const onUpdateNote = (id) => {
         summary: "Confirmed",
         detail: "Note updated!",
         life: 3000,
+        acceptClass: "confirm-dialogue-accept",
+        rejectClass: "confirm-dialogue-reject",
       });
       finishEdit(id, index);
     },
@@ -128,7 +129,6 @@ function handleButtonClick(object) {
 }
 
 function finishEdit(id, index) {
-
   if (index !== -1) {
     // Create the updated object
     const updatedNote = {
@@ -146,9 +146,8 @@ function finishEdit(id, index) {
 
     // Update the item at the found index with the new object
     list.value[index] = updatedNote;
-  }
-  else{
-    alert('You have deleted this note!')
+  } else {
+    alert("You have deleted this note!");
   }
 }
 function updateNote(id) {

@@ -98,6 +98,8 @@ const onDeleteNote = (id) => {
         summary: "Confirmed",
         detail: "Record deleted",
         life: 3000,
+        acceptClass: "confirm-dialogue-accept",
+        rejectClass: "confirm-dialogue-reject",
       });
       emit("deleteNote", id);
     },

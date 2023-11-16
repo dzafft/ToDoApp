@@ -1,20 +1,19 @@
 html {
-    background-color: white;
-    margin: 0;
-    height: 100vh;
-    /* Add other styles for the HTML element as needed */
-  }
-  
-  body {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    /* Add other styles for the body element as needed */
-  }
-  
-  #app {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    
-  }
+  background-color: white;
+  margin: 0;
+  height: 100vh;
+  /* Add other styles for the HTML element as needed */
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  /* Add other styles for the body element as needed */
+}
+
+#app {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
