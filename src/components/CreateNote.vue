@@ -96,13 +96,13 @@ import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "primeicons/primeicons.css";
 import Toast from "primevue/toast";
 import ConfirmDialog from "primevue/confirmdialog";
-import {useTitleStore} from "@/stores/noteTitle";
-import {useTextStore} from "@/stores/noteText";
-import {useListStore} from "@/stores/noteList";
-import {useToUpdateStore} from "@/stores/toUpdate";
+import {useTitleStore} from "../stores/noteTitle";
+import {useTextStore} from "../stores/noteText";
+import {useListStore} from "../stores/noteList";
+import {useToUpdateStore} from "../stores/toUpdate";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
-import {useUpdateIDStore} from "@/stores/UpdateID";
+import {useUpdateIDStore} from "../stores/updateID"
 
 const titleStore = useTitleStore();
 const textStore = useTextStore();

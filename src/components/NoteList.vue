@@ -63,11 +63,12 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import Card from "primevue/card";
 import { useRouter } from "vue-router";
-import {useListStore} from "@/stores/noteList";
-import {useToUpdateStore} from "@/stores/toUpdate";
-import {useTitleStore} from "@/stores/noteTitle";
-import {useTextStore} from "@/stores/noteText";
-import {useUpdateIDStore} from "@/stores/updateID";
+import {useTitleStore} from "../stores/noteTitle";
+import {useTextStore} from "../stores/noteText";
+import {useListStore} from "../stores/noteList";
+import {useToUpdateStore} from "../stores/toUpdate";
+import {useUpdateIDStore} from "../stores/updateID"
+
 
 onBeforeMount(()=>{
   listStore.initializeStore();
