@@ -4,7 +4,7 @@
     <Toast />
     <ConfirmDialog />
     <ul class="notes-list">
-      <Card class="note" v-for="item in list" :key="item.id">
+      <Card class="note" v-for="item in listStore.list" :key="item.id">
         <template #title>
           <div class="note-title">{{ item.title }}</div>
         </template>
@@ -27,7 +27,12 @@
                   rounded
                   aria-label="Cancel"
                   class="update-button"
-                  @click="handleEditClick(item, $event)"
+                  @click="
+                    toUpdateStore.userIsUpdating();
+                    titleStore.setTitle(item.title);
+                    textStore.setText(item.text);
+                    updateIDStore.changeUpdateID(item.id)
+                  "
                 />
               </router-link>
               <Button
@@ -48,6 +53,7 @@
 </template>
 
 <script setup>
+import { onBeforeMount } from "vue"; 
 import Button from "primevue/button";
 import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "primeicons/primeicons.css";
@@ -57,12 +63,24 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import Card from "primevue/card";
 import { useRouter } from "vue-router";
+import {useListStore} from "@/stores/noteList";
+import {useToUpdateStore} from "@/stores/toUpdate";
+import {useTitleStore} from "@/stores/noteTitle";
+import {useTextStore} from "@/stores/noteText";
+import {useUpdateIDStore} from "@/stores/updateID";
 
-function handleEditClick(item, event) {
-  emit("updateNote", item.id);
-}
+onBeforeMount(()=>{
+  listStore.initializeStore();
+})
+
+const listStore = useListStore();
+const toUpdateStore = useToUpdateStore();
+const titleStore = useTitleStore();
+const textStore = useTextStore();
+const updateIDStore = useUpdateIDStore();
 
 const itemTimeDifference = (item) => {
+  console.log(item)
   const currentDate = new Date();
   const dueDate = new Date(item.completedByDate + " " + item.completedByTime);
 
@@ -101,7 +119,7 @@ const onDeleteNote = (id) => {
         acceptClass: "confirm-dialogue-accept",
         rejectClass: "confirm-dialogue-reject",
       });
-      emit("deleteNote", id);
+      listStore.deleteNote(id);
     },
     reject: () => {
       toast.add({
@@ -114,13 +132,6 @@ const onDeleteNote = (id) => {
   });
 };
 
-const emit = defineEmits(["updateNote", "deleteNote"]);
-
-const props = defineProps({
-  list: {
-    type: Array,
-  },
-});
 </script>
 
 <style scoped>

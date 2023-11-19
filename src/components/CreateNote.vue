@@ -5,18 +5,18 @@
       <Toast />
       <ConfirmDialog />
       <Textarea
-        :value="noteTitle"
+        :modelValue="titleStore.noteTitle"
         placeholder="Title..."
         id="titleTextarea"
         class="non-resizable-textarea"
-        @input="$emit('update:noteTitle', $event.target.value)"
+        @update:modelValue="titleStore.updateNoteTitle"
       />
       <Textarea
-        :value="noteText"
+        :modelValue="textStore.noteText"
         placeholder="Type away..."
         id="textTextarea"
         class="note-text non-resizable-textarea"
-        @input="$emit('update:noteText', $event.target.value)"
+        @update:modelValue="textStore.updateNoteText"
       />
       <div class="time-container">
         <div class="datepicker-input">
@@ -27,8 +27,7 @@
             id="datepicker"
             :min="getTodayDate()"
             type="date"
-            :value="completedByDate"
-            @input="$emit('update:completedByDate', $event.target.value)"
+            v-model="completedByDate"
           />
           <small id="small-label"
             >Enter the date by which you would like this task completed.</small
@@ -41,8 +40,7 @@
             type="time"
             min="00:00"
             max="23:59"
-            :value="completedByTime"
-            @input="$emit('update:completedByTime', $event.target.value)"
+            v-model="completedByTime"
           />
           <small id="small-label">Enter the specific hour.</small>
         </div>
@@ -50,15 +48,23 @@
           class="submit-button"
           size="large"
           @click="
-            $emit('handleButtonClick', {
-              title: noteTitle,
-              text: noteText,
+            toUpdateStore.toUpdate ?
+            onUpdateNote(updateIDStore.updateID, {
+              title: titleStore.noteTitle,
+              text: textStore.noteText,
+              date: completedByDate,
+              time: completedByTime,
+            })
+            :
+            handleSubmitButtonClick({
+              title: titleStore.noteTitle,
+              text: textStore.noteText,
               date: completedByDate,
               time: completedByTime,
             })
           "
           :disabled="isSubmitButtonDisabled"
-          :label="toUpdate ? 'Update' : 'Submit'"
+          :label="toUpdateStore.toUpdate ? 'Update' : 'Submit'"
         />
         <Button
           :disabled="isClearButtonDisabled"
@@ -66,13 +72,13 @@
           severity="danger"
           size="large"
           label="Clear"
-          @click="$emit('clearNote')"
+          @click="clearNote"
         />
         <Button
+          @click="undoEdit"
           severity="success"
           size="small"
-          @click="$emit('undoEdit')"
-          v-if="toUpdate"
+          v-if="toUpdateStore.toUpdate"
           >Cancel Update<i class="pi pi-undo"
         /></Button>
       </div>
@@ -81,7 +87,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import "primevue/resources/themes/lara-light-indigo/theme.css";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
@@ -90,25 +96,107 @@ import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "primeicons/primeicons.css";
 import Toast from "primevue/toast";
 import ConfirmDialog from "primevue/confirmdialog";
-import {useTitleStore} from "@/stores/title";
+import {useTitleStore} from "@/stores/noteTitle";
+import {useTextStore} from "@/stores/noteText";
+import {useListStore} from "@/stores/noteList";
+import {useToUpdateStore} from "@/stores/toUpdate";
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
+import {useUpdateIDStore} from "@/stores/UpdateID";
 
 const titleStore = useTitleStore();
+const textStore = useTextStore();
+const listStore = useListStore();
+const toUpdateStore = useToUpdateStore();
+const updateIDStore = useUpdateIDStore();
+
+function getTomorrowDate() {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const year = tomorrow.getFullYear();
+  const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
+  const day = String(tomorrow.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function undoEdit() {
+  textStore.deleteText();
+  titleStore.deleteTitle();
+  completedByDate.value = getTomorrowDate();
+  completedByTime.value = "10:00";
+  toUpdateStore.userIsNotUpdating();
+}
+
+function clearNote() {
+  textStore.deleteText();
+  titleStore.deleteTitle();
+  completedByDate.value = "";
+  completedByTime.value = "";
+}
+
+function handleSubmitButtonClick(note){
+  listStore.addNote(note);
+  titleStore.deleteTitle();
+  textStore.deleteText();
+}
+
+const confirm = useConfirm();
+const toast = useToast();
+
+const onUpdateNote = (id, note) => {
+  const index = listStore.list.findIndex((item) => item.id === id);
+  if (index === -1) {
+    alert("You have deleted this note!");
+    return;
+  }
+  confirm.require({
+    message: "Are you sure you want to proceed?",
+    header: "Edit",
+    icon: "pi pi-exclamation-triangle",
+    accept: () => {
+      toast.add({
+        severity: "info",
+        summary: "Confirmed",
+        detail: "Note updated!",
+        life: 3000,
+        acceptClass: "confirm-dialogue-accept",
+        rejectClass: "confirm-dialogue-reject",
+      });
+      listStore.editNote(id, index, note);
+      toUpdateStore.userIsNotUpdating();
+      resetDates();
+      textStore.deleteText();
+      titleStore.deleteTitle();
+    },
+    reject: () => {
+      toast.add({
+        severity: "error",
+        summary: "Rejected",
+        detail: "Note preserved!",
+        life: 3000,
+      });
+    },
+  });
+};
+
+const completedByDate = ref(getTomorrowDate());
+const completedByTime = ref("10:00");
 
 const isSubmitButtonDisabled = computed(() => {
   return (
-    props.noteTitle === "" ||
-    props.noteText === "" ||
-    props.completedByDate === "" ||
-    props.completedByTime === ""
+    titleStore.noteTitle === "" ||
+    textStore.noteText === "" ||
+    completedByDate.value === "" ||
+    completedByTime.value === ""
   );
 });
 
 const isClearButtonDisabled = computed(() => {
   return (
-    props.noteTitle === "" &&
-    props.noteText === "" &&
-    props.completedByDate === "" &&
-    props.completedByTime === ""
+    titleStore.noteTitle === "" &&
+    textStore.noteText === "" &&
+    completedByDate.value === "" &&
+    completedByTime.value === ""
   );
 });
 
@@ -120,37 +208,11 @@ function getTodayDate() {
   return `${year}-${month}-${day}`;
 }
 
-const props = defineProps({
-  noteTitle: {
-    type: String,
-  },
-  noteText: {
-    type: String,
-  },
-  completedByDate: {
-    type: String,
-  },
-  completedByTime: {
-    type: String,
-  },
-  list: {
-    type: Array,
-  },
-  toUpdate: {
-    type: Boolean,
-  },
-});
+function resetDates(){
+  completedByDate.value = getTomorrowDate();
+  completedByTime.value = "10:00";
+}
 
-const emit = defineEmits([
-  "finishUpdate",
-  "clearNote",
-  "handleButtonClick",
-  "update:completedByTime",
-  "update:completedByDate",
-  "update:noteTitle",
-  "update:noteText",
-  "undoEdit",
-]);
 </script>
 
 <style scoped>
