@@ -11,6 +11,7 @@
     "test:e2e": "concurrently 'npm run start:app' 'cypress open'"
   },
   "dependencies": {
+    "cypress": "^13.6.2",
     "esbuild": "^0.19.11",
     "nanoid": "^5.0.2",
     "pinia": "^2.1.7",
@@ -23,7 +24,6 @@
     "@vitejs/plugin-vue": "^4.3.4",
     "@vue/test-utils": "^2.4.1",
     "concurrently": "^8.2.2",
-    "cypress": "^13.3.3",
     "eslint": "^8.54.0",
     "eslint-plugin-vue": "^9.18.1",
     "prettier": "3.0.3",

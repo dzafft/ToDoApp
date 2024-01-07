@@ -2,7 +2,7 @@
   <div class="app-container">
     <header>
       <h1>Notes Website</h1>
-      <div>
+      <div class="content-container">
         <nav class="navbar">
           <router-link :to="{ name: 'createnote' }">Create Note</router-link> 
           <router-link :to="{ name: 'notelist' }">Note List</router-link>

@@ -246,7 +246,8 @@ textarea {
 .timepicker-input {
   display: flex;
   flex-direction: column;
-  margin-right: 4%
+  margin-right: 4%;
+  flex-grow: 1;
 }
 
 .label-datepicker {
@@ -276,7 +277,8 @@ textarea {
 .datepicker-input {
   display: flex;
   flex-direction: column;
-  margin-right: 4%
+  margin-right: 4%;
+  flex-grow: 1;
 }
 
 .notemaker-container {
@@ -293,6 +295,13 @@ textarea {
 @media (max-width: 564px) {
   .timepicker-input {
     margin-top: 4%;
+    width: 100%;
+    margin-right: 0;
+  }
+  .datepicker-input {
+    margin-top: 4%;
+    width: 100%;
+    margin-right: 0;
   }
   .calendar-inputs{
     flex-direction: column;
