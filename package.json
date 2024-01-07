@@ -11,6 +11,7 @@
     "test:e2e": "concurrently 'npm run start:app' 'cypress open'"
   },
   "dependencies": {
+    "esbuild": "^0.19.11",
     "nanoid": "^5.0.2",
     "pinia": "^2.1.7",
     "primeicons": "^6.0.1",

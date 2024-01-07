@@ -44,7 +44,8 @@
           />
           <small id="small-label">Enter the specific hour.</small>
         </div>
-        <Button
+        <div class="create-note-button-container">
+          <Button
           class="submit-button"
           size="large"
           @click="
@@ -81,6 +82,7 @@
           v-if="toUpdateStore.toUpdate"
           >Cancel Update<i class="pi pi-undo"
         /></Button>
+        </div>
       </div>
     </div>
   </div>
@@ -244,6 +246,7 @@ textarea {
 .timepicker-input {
   display: flex;
   flex-direction: column;
+  margin-right: 4%
 }
 
 .label-datepicker {
@@ -253,22 +256,46 @@ textarea {
 .time-container {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 #small-label {
   color: black;
 }
 
-.time-container > * {
-  margin-right: 4%;
+.create-note-button-container{
+  margin-top: 1%;
+  flex-grow: 1;
+  flex-wrap: wrap; 
 }
+
+.create-note-button-container button{
+  margin-right: 3%;
+}
+
 .datepicker-input {
   display: flex;
   flex-direction: column;
+  margin-right: 4%
 }
 
 .notemaker-container {
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 846px) {
+  .create-note-button-container{
+    width: 100%;
+  }
+}
+
+@media (max-width: 564px) {
+  .timepicker-input {
+    margin-top: 4%;
+  }
+  .calendar-inputs{
+    flex-direction: column;
+  }
 }
 </style>

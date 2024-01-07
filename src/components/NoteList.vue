@@ -6,19 +6,8 @@
     <ul class="notes-list">
       <Card class="note" v-for="item in listStore.list" :key="item.id">
         <template #title>
-          <div class="note-title">{{ item.title }}</div>
-        </template>
-        <template #content>
-          <div class="note-text">
-            <p class="text-content">{{ item.text }}</p>
-          </div>
-        </template>
-        <template #footer>
-          <div class="card-footer">
-            <div class="time-difference">
-              <span class="time-difference-text">Time left:</span>
-              {{ itemTimeDifference(item) }}
-            </div>
+          <div class="note-title-row">
+            <div class="note-title">{{ item.title }}</div>
             <div class="note-buttons">
               <router-link :to="{ name: 'createnote' }">
                 <Button
@@ -44,6 +33,19 @@
                 @click="onDeleteNote(item.id)"
                 class="delete-button"
               />
+            </div>
+          </div>
+        </template>
+        <template #content>
+          <div class="note-text">
+            <p class="text-content">{{ item.text }}</p>
+          </div>
+        </template>
+        <template #footer>
+          <div class="card-footer">
+            <div class="time-difference">
+              <span class="time-difference-text">Time left:</span>
+              {{ itemTimeDifference(item) }}
             </div>
           </div>
         </template>
@@ -153,7 +155,10 @@ const onDeleteNote = (id) => {
   word-wrap: break-word;
   white-space: pre-wrap;
 }
-
+.note-title-row{
+  display: flex;
+  justify-content: space-between;
+}
 .note-text {
   text-align: left;
 }
@@ -182,5 +187,11 @@ const onDeleteNote = (id) => {
 
 .time-difference-text {
   text-decoration: underline;
+}
+
+@media (max-width: 564px) {
+  .note-title-row {
+    flex-direction: column;
+  }
 }
 </style>
