@@ -45,7 +45,7 @@
           <div class="card-footer">
             <div class="time-difference">
               <span class="time-difference-text">Time left:</span>
-              {{ itemTimeDifference(item) }}
+              {{ diff(item) }}
             </div>
           </div>
         </template>
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount } from "vue"; 
+import { onBeforeMount, ref, computed } from "vue"; 
 import Button from "primevue/button";
 import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "primeicons/primeicons.css";
@@ -64,7 +64,6 @@ import ConfirmDialog from "primevue/confirmdialog";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import Card from "primevue/card";
-import { useRouter } from "vue-router";
 import {useTitleStore} from "../stores/noteTitle";
 import {useTextStore} from "../stores/noteText";
 import {useListStore} from "../stores/noteList";
@@ -82,27 +81,38 @@ const titleStore = useTitleStore();
 const textStore = useTextStore();
 const updateIDStore = useUpdateIDStore();
 
-const itemTimeDifference = (item) => {
-  console.log(item)
-  const currentDate = new Date();
-  const dueDate = new Date(item.completedByDate + " " + item.completedByTime);
+const currentTime = ref(new Date());
 
-  const timeDifference = dueDate - currentDate;
-  const hoursDifference = Math.floor(timeDifference / (1000 * 60 * 60));
-  const minutesDifference = Math.floor(
-    (timeDifference % (1000 * 60 * 60)) / (1000 * 60),
-  );
-  const secondsDifference = Math.floor((timeDifference % (1000 * 60)) / 1000);
+setInterval(() => {
+  currentTime.value = new Date();
+}, 1000);
 
-  if (timeDifference <= 0) {
-    return "Time expired";
-  }
-  if (hoursDifference === 0) {
-    return `${minutesDifference} minutes and ${secondsDifference} seconds`;
-  } else {
-    return `${hoursDifference} hours and ${minutesDifference} minutes`;
-  }
-};
+
+
+const diff = (item) => {
+  const dueDate = new Date(`${item.completedByDate}T${item.completedByTime}:00`);
+  console.log(dueDate)
+  console.log(currentTime.value)
+  const diffMilli = dueDate - currentTime.value;
+
+  // Calculate the differences in various units
+  const diffSeconds = Math.floor(diffMilli / 1000);
+  const seconds = diffSeconds % 60;
+
+  const diffMinutes = Math.floor(diffSeconds / 60);
+  const minutes = diffMinutes % 60;
+
+  const diffHours = Math.floor(diffMinutes / 60);
+  const hours = diffHours % 24;
+
+  const diffDays = Math.floor(diffHours / 24);
+  const days = diffDays % 7;
+
+  const weeks = Math.floor(diffDays / 7);
+
+  return `${weeks} Weeks, ${days} Days, ${hours} Hours, ${minutes} Minutes, ${seconds} Seconds`
+}
+
 
 const confirm = useConfirm();
 const toast = useToast();
